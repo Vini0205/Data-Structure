@@ -1,0 +1,107 @@
+import java.util.Scanner;
+
+public class ArrayOperations {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int[] arr = new int[100]; 
+        int size = 5; 
+        arr[0] = 10;
+        arr[1] = 20;
+        arr[2] = 30;
+        arr[3] = 40;
+        arr[4] = 50;
+
+        while (true) {
+            System.out.println("\n==== Array Operations Menu ====");
+            System.out.println("1. Display Array");
+            System.out.println("2. Insert at Position");
+            System.out.println("3. Delete at Position");
+            System.out.println("4. Find Maximum and Minimum");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    displayArray(arr, size);
+                    break;
+
+                case 2:
+                    System.out.print("Enter position (0 to " + size + "): ");
+                    int posInsert = sc.nextInt();
+                    System.out.print("Enter value to insert: ");
+                    int value = sc.nextInt();
+                    size = insertAtPosition(arr, size, posInsert, value);
+                    break;
+
+                case 3:
+                    System.out.print("Enter position to delete (0 to " + (size - 1) + "): ");
+                    int posDelete = sc.nextInt();
+                    size = deleteAtPosition(arr, size, posDelete);
+                    break;
+
+                case 4:
+                    findMaxMin(arr, size);
+                    break;
+
+                case 5:
+                    System.out.println("Exiting program...");
+                    sc.close();
+                    return;
+
+                default:
+                    System.out.println("Invalid choice! Try again.");
+            }
+        }
+    }
+
+    public static int insertAtPosition(int[] arr, int size, int pos, int value) {
+        if (pos < 0 || pos > size) {
+            System.out.println("Invalid position!");
+            return size;
+        }
+        for (int i = size - 1; i >= pos; i--) {
+            arr[i + 1] = arr[i];
+        }
+        arr[pos] = value;
+        size++;
+        System.out.println("Inserted " + value + " at position " + pos);
+        return size;
+    }
+
+    public static int deleteAtPosition(int[] arr, int size, int pos) {
+        if (pos < 0 || pos >= size) {
+            System.out.println("Invalid position!");
+            return size;
+        }
+        for (int i = pos; i < size - 1; i++) {
+            arr[i] = arr[i + 1]; 
+        }
+        size--;
+        System.out.println("Deleted element at position " + pos);
+        return size;
+    }
+
+    public static void findMaxMin(int[] arr, int size) {
+        if (size == 0) {
+            System.out.println("Array is empty!");
+            return;
+        }
+        int max = arr[0];
+        int min = arr[0];
+        for (int i = 1; i < size; i++) {
+            if (arr[i] > max) max = arr[i];
+            if (arr[i] < min) min = arr[i];
+        }
+        System.out.println("Maximum: " + max + " | Minimum: " + min);
+    }
+
+    public static void displayArray(int[] arr, int size) {
+        System.out.print("Array elements: ");
+        for (int i = 0; i < size; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+    }
+}
