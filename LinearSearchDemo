@@ -1,0 +1,54 @@
+import java.util.Scanner;
+
+public class LinearSearchDemo {
+
+    public static int linearSearch(int[] arr, int target) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == target) {
+                return i; 
+            }
+        }
+        return -1; 
+    }
+
+    public static int countOccurrences(int[] arr, int target) {
+        int count = 0;
+        for (int num : arr) {
+            if (num == target) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int[] studentIDs = {105, 210, 356, 478, 512, 630, 210, 105};
+
+        System.out.println("=== Linear Search Demo ===");
+        System.out.print("Enter Student ID to search: ");
+        int target = sc.nextInt();
+
+        int position = linearSearch(studentIDs, target);
+
+        if (position != -1) {
+            System.out.println("Student ID " + target + " found at index " + position);
+        } else {
+            System.out.println("Student ID " + target + " not found in the list.");
+        }
+
+        int count = countOccurrences(studentIDs, target);
+        if (count > 1) {
+            System.out.println("Note: The Student ID " + target + " appears " + count + " times.");
+        }
+
+        System.out.println("\n--- Complexity Analysis ---");
+        System.out.println("Best Case: O(1) → Found at first element.");
+        System.out.println("Worst Case: O(n) → Found at last element or not found.");
+        System.out.println("Average Case: O(n) → About half the list is checked.");
+        System.out.println("Space Complexity: O(1) → Only index/target variables used.");
+
+        sc.close();
+    }
+}
