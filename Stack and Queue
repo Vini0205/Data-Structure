@@ -1,0 +1,137 @@
+import java.util.Scanner;
+
+// Stack Class (Undo Simulation)
+class Stack {
+    private int top;
+    private String[] stack;
+    private int maxSize;
+
+    Stack(int size) {
+        maxSize = size;
+        stack = new String[maxSize];
+        top = -1;
+    }
+
+    void push(String action) {
+        if (top == maxSize - 1)
+            System.out.println("Stack Overflow");
+        else
+            stack[++top] = action;
+    }
+
+    void pop() {
+        if (top == -1)
+            System.out.println("Nothing to undo.");
+        else
+            System.out.println("Undo action: " + stack[top--]);
+    }
+
+    void display() {
+        if (top == -1) {
+            System.out.println("Stack is empty.");
+            return;
+        }
+        System.out.println("Current Actions:");
+        for (int i = top; i >= 0; i--)
+            System.out.println("- " + stack[i]);
+    }
+}
+
+// Queue Class (Customer Line)
+class Queue {
+    private int front, rear;
+    private String[] queue;
+    private int maxSize;
+
+    Queue(int size) {
+        maxSize = size;
+        queue = new String[maxSize];
+        front = 0;
+        rear = -1;
+    }
+
+    void enqueue(String customer) {
+        if (rear == maxSize - 1)
+            System.out.println("Queue is full.");
+        else
+            queue[++rear] = customer;
+    }
+
+    void dequeue() {
+        if (front > rear)
+            System.out.println("No customers to serve.");
+        else
+            System.out.println("Serving customer: " + queue[front++]);
+    }
+
+    void display() {
+        if (front > rear) {
+            System.out.println("Queue is empty.");
+            return;
+        }
+        System.out.println("Customers in line:");
+        for (int i = front; i <= rear; i++)
+            System.out.println("- " + queue[i]);
+    }
+}
+
+// Main Program
+public class StackQueue {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Stack undoStack = new Stack(5);
+        Queue customerQueue = new Queue(5);
+
+        int choice;
+        do {
+            System.out.println("\n=== Stack & Queue ===");
+            System.out.println("1. Add Text Action (Stack)");
+            System.out.println("2. Undo Action (Stack)");
+            System.out.println("3. Show Actions");
+            System.out.println("4. Add Customer (Queue)");
+            System.out.println("5. Serve Customer (Queue)");
+            System.out.println("6. Show Customers");
+            System.out.println("7. Exit");
+            System.out.print("Choose: ");
+            choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter action: ");
+                    undoStack.push(sc.nextLine());
+                    break;
+
+                case 2:
+                    undoStack.pop();
+                    break;
+
+                case 3:
+                    undoStack.display();
+                    break;
+
+                case 4:
+                    System.out.print("Enter customer name: ");
+                    customerQueue.enqueue(sc.nextLine());
+                    break;
+
+                case 5:
+                    customerQueue.dequeue();
+                    break;
+
+                case 6:
+                    customerQueue.display();
+                    break;
+
+                case 7:
+                    System.out.println("Program ended.");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        } while (choice != 7);
+
+        sc.close();
+    }
+}
