@@ -1,0 +1,139 @@
+import java.util.Scanner;
+
+// Tree Node
+class TreeNode {
+    int id;
+    String name;
+    TreeNode left, right;
+
+    TreeNode(int id, String name) {
+        this.id = id;
+        this.name = name;
+        left = right = null;
+    }
+}
+
+// Binary Search Tree
+class StudentBST {
+    TreeNode root;
+
+    void insert(int id, String name) {
+        root = insertRecursive(root, id, name);
+    }
+
+    TreeNode insertRecursive(TreeNode node, int id, String name) {
+        if (node == null)
+            return new TreeNode(id, name);
+
+        if (id < node.id)
+            node.left = insertRecursive(node.left, id, name);
+        else if (id > node.id)
+            node.right = insertRecursive(node.right, id, name);
+
+        return node;
+    }
+
+    TreeNode search(int id) {
+        return searchRecursive(root, id);
+    }
+
+    TreeNode searchRecursive(TreeNode node, int id) {
+        if (node == null || node.id == id)
+            return node;
+
+        if (id < node.id)
+            return searchRecursive(node.left, id);
+        else
+            return searchRecursive(node.right, id);
+    }
+
+    void inorder() {
+        inorderRecursive(root);
+    }
+
+    void inorderRecursive(TreeNode node) {
+        if (node != null) {
+            inorderRecursive(node.left);
+            System.out.println("ID: " + node.id + " | Name: " + node.name);
+            inorderRecursive(node.right);
+        }
+    }
+
+    int findHeight(TreeNode node) {
+        if (node == null)
+            return -1;
+        return 1 + Math.max(findHeight(node.left), findHeight(node.right));
+    }
+
+    int countLeaves(TreeNode node) {
+        if (node == null)
+            return 0;
+        if (node.left == null && node.right == null)
+            return 1;
+        return countLeaves(node.left) + countLeaves(node.right);
+    }
+}
+
+public class StudentBSTApp {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        StudentBST bst = new StudentBST();
+        int choice;
+
+        do {
+            System.out.println("\n=== Student Record System (BST) ===");
+            System.out.println("1. Insert Student");
+            System.out.println("2. Search Student");
+            System.out.println("3. Display All Students (Sorted)");
+            System.out.println("4. Show Tree Height");
+            System.out.println("5. Count Leaf Nodes");
+            System.out.println("6. Exit");
+            System.out.print("Choose: ");
+            choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter Student ID: ");
+                    int id = sc.nextInt();
+                    sc.nextLine();
+                    System.out.print("Enter Name: ");
+                    String name = sc.nextLine();
+                    bst.insert(id, name);
+                    System.out.println("Student inserted successfully.");
+                    break;
+
+                case 2:
+                    System.out.print("Enter ID to search: ");
+                    int searchId = sc.nextInt();
+                    TreeNode result = bst.search(searchId);
+                    if (result != null)
+                        System.out.println("Found → ID: " + result.id + ", Name: " + result.name);
+                    else
+                        System.out.println("Student not found.");
+                    break;
+
+                case 3:
+                    System.out.println("\n--- Student List (Inorder Traversal) ---");
+                    bst.inorder();
+                    break;
+
+                case 4:
+                    System.out.println("Tree Height: " + bst.findHeight(bst.root));
+                    break;
+
+                case 5:
+                    System.out.println("Leaf Nodes: " + bst.countLeaves(bst.root));
+                    break;
+
+                case 6:
+                    System.out.println("Program terminated.");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        } while (choice != 6);
+
+        sc.close();
+    }
+}
