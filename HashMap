@@ -1,0 +1,71 @@
+import java.util.HashMap;
+import java.util.Map;
+
+class Student {
+    String id;
+    String name;
+    double grade;
+
+    Student(String id, String name, double grade) {
+        this.id = id;
+        this.name = name;
+        this.grade = grade;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + id + ", Name: " + name + ", Grade: " + grade;
+    }
+}
+
+public class HashMapLab {
+    public static void main(String[] args) {
+        // Task 1: HashMap of student grades
+        HashMap<String, Double> grades = new HashMap<>();
+        grades.put("Ken", 89.5);
+        grades.put("Gleen", 91.0);
+        grades.put("Shai", 85.5);
+
+        System.out.println("Gleen's grade: " + grades.get("Gleeen"));
+        System.out.println("Contains Ken? " + grades.containsKey("Ken"));
+
+        grades.remove("Shai");
+        System.out.println("Updated grades:");
+        for (Map.Entry<String, Double> entry : grades.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+
+        // Task 3: HashMap of Student objects
+        HashMap<String, Student> students = new HashMap<>();
+        students.put("2025-001", new Student("2025-001", "Ken", 89.5));
+        students.put("2025-002", new Student("2025-002", "Gleen", 91.0));
+        students.put("2025-003", new Student("2025-003", "Shai", 85.5));
+
+        // Update a student's grade
+        students.get("2025-002").grade = 93.0;
+
+        // Retrieve a student record
+        System.out.println("\nStudent 2025-002 record: " + students.get("2025-002"));
+
+        // Display all student records
+        System.out.println("\nAll Student Records:");
+        for (Map.Entry<String, Student> entry : students.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        }
+
+        // Task 4: Mini Product Inventory
+        HashMap<String, Integer> inventory = new HashMap<>();
+        inventory.put("P001", 50);
+        inventory.put("P002", 30);
+        inventory.put("P003", 20);
+
+        // Update stock
+        inventory.put("P002", inventory.get("P002") + 15); // Restock
+        inventory.put("P003", inventory.get("P003") - 5);  // Sold 5 units
+
+        System.out.println("\nProduct Inventory:");
+        for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
+            System.out.println("Product Code: " + entry.getKey() + ", Quantity: " + entry.getValue());
+        }
+    }
+}
