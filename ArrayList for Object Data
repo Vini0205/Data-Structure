@@ -1,0 +1,67 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+
+class Student {
+    int id;
+    String name;
+    double grade;
+
+    Student(int id, String name, double grade) {
+        this.id = id;
+        this.name = name;
+        this.grade = grade;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + id + ", Name: " + name + ", Grade: " + grade;
+    }
+}
+
+public class StudentManagementSystem {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Student> students = new ArrayList<>();
+
+        // Adding initial students
+        students.add(new Student(101, "Vine", 90));
+        students.add(new Student(102, "Jums", 85));
+        students.add(new Student(103, "Yuan", 95));
+
+        System.out.println("=== Initial Student Records ===");
+        displayStudents(students);
+
+        // Update a student's grade
+        System.out.println("\nUpdating grade for ID 102 to 88...");
+        for (Student s : students) {
+            if (s.id == 102) {
+                s.grade = 88;
+                break;
+            }
+        }
+
+        // Remove a student by name
+        System.out.println("\nRemoving student 'Ben'...");
+        students.removeIf(s -> s.name.equalsIgnoreCase("Ben"));
+
+        System.out.println("\n=== Updated Student Records ===");
+        displayStudents(students);
+
+        // Sort by grade descending
+        System.out.println("\nSorting by grade descending...");
+        Collections.sort(students, (a, b) -> Double.compare(b.grade, a.grade));
+        displayStudents(students);
+
+        // Sort by name alphabetically
+        System.out.println("\nSorting by name alphabetically...");
+        Collections.sort(students, (a, b) -> a.name.compareToIgnoreCase(b.name));
+        displayStudents(students);
+    }
+
+    static void displayStudents(ArrayList<Student> students) {
+        for (Student s : students) {
+            System.out.println(s);
+        }
+    }
+}
